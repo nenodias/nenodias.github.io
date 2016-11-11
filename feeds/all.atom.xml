@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nenodias</title><link href="http://nenodias.github.io/" rel="alternate"></link><link href="http://nenodias.github.io/feeds/all.atom.xml" rel="self"></link><id>http://nenodias.github.io/</id><updated>2016-11-11T13:09:00-02:00</updated><entry><title>Segundo Capítulo</title><link href="http://nenodias.github.io/segundo-artigo.html" rel="alternate"></link><published>2016-11-11T13:09:00-02:00</published><updated>2016-11-11T13:09:00-02:00</updated><author><name>Horácio Dias</name></author><id>tag:nenodias.github.io,2016-11-11:segundo-artigo.html</id><summary type="html">&lt;h1&gt;Como podemos enfrentar as demandas por documentações&lt;/h1&gt;
+&lt;h2&gt;Isso é um subtitulo&lt;/h2&gt;
+&lt;p&gt;Isso será feito independente de do poder&lt;/p&gt;
+&lt;p&gt;Como será que o esperamos por algo que nem ao menos sabemos o que é. Esperar sem ao menos imaginar o que se espera&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://github.com" title="Link bacanudo"&gt;Link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&amp;#109;&amp;#97;&amp;#105;&amp;#108;&amp;#116;&amp;#111;&amp;#58;&amp;#104;&amp;#111;&amp;#114;&amp;#97;&amp;#99;&amp;#105;&amp;#111;&amp;#46;&amp;#100;&amp;#105;&amp;#97;&amp;#115;&amp;#64;&amp;#121;&amp;#97;&amp;#104;&amp;#111;&amp;#111;&amp;#46;&amp;#99;&amp;#111;&amp;#109;"&gt;&amp;#104;&amp;#111;&amp;#114;&amp;#97;&amp;#99;&amp;#105;&amp;#111;&amp;#46;&amp;#100;&amp;#105;&amp;#97;&amp;#115;&amp;#64;&amp;#121;&amp;#97;&amp;#104;&amp;#111;&amp;#111;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
+&lt;a href="http://google.com.br"&gt;http://google.com.br&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bloco de citação
+Será que funciona legal essas paradas??
+Não sei não hein...&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img alt="Python" src="https://www.python.org/static/community_logos/python-logo-master-v3-TM.png" title="Python é só loucuras" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;h1&amp;gt;Isso é HTML&amp;lt;/h1&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Olá iMundo&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.lang.String&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;JavaAli&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@Id&lt;/span&gt;
+    &lt;span class="nd"&gt;@Column&lt;/span&gt;
+    &lt;span class="n"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Long&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;JavaAli&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+        &lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;Construtor&lt;/span&gt; &lt;span class="n"&gt;maneiro&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;    
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;\
+!&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.da2k.com.br/2015/02/08/aprenda-markdown/"&gt;Link de como usar o Markdown&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://pythonclub.com.br/criando-sites-estaticos-com-pelican.html"&gt;Link de como fazer os paranues com Pelican&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://fedoramagazine.org/make-github-pages-blog-with-pelican/"&gt;Link usando Pelican + Github&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category><category term="markdown"></category><category term="python"></category><category term="loucura"></category></entry><entry><title>O que fazer</title><link href="http://nenodias.github.io/primeiro-artigo.html" rel="alternate"></link><published>2016-11-11T12:00:00-02:00</published><updated>2016-11-11T12:00:00-02:00</updated><author><name>Horácio Dias</name></author><id>tag:nenodias.github.io,2016-11-11:primeiro-artigo.html</id><summary type="html">&lt;h1&gt;Testando nosso primeiro post no Pelican&lt;/h1&gt;
+&lt;p&gt;Pelican é um gerador de páginas estáticas criado em python para facilitar nossa vida, na 
+criação de blogs, landingpages ou site estáticos.&lt;/p&gt;</summary><category term="pelican"></category><category term="markdown"></category></entry></feed>

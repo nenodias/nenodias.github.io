@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nenodias</title><link href="http://nenodias.github.io/" rel="alternate"></link><link href="http://nenodias.github.io/feeds/python.atom.xml" rel="self"></link><id>http://nenodias.github.io/</id><updated>2016-11-11T12:00:00-02:00</updated><entry><title>O que fazer</title><link href="http://nenodias.github.io/primeiro-artigo.html" rel="alternate"></link><published>2016-11-11T12:00:00-02:00</published><updated>2016-11-11T12:00:00-02:00</updated><author><name>Horácio Dias</name></author><id>tag:nenodias.github.io,2016-11-11:primeiro-artigo.html</id><summary type="html">&lt;h1&gt;Testando nosso primeiro post no Pelican&lt;/h1&gt;
+&lt;p&gt;Pelican é um gerador de páginas estáticas criado em python para facilitar nossa vida, na 
+criação de blogs, landingpages ou site estáticos.&lt;/p&gt;</summary><category term="pelican"></category><category term="markdown"></category></entry></feed>
