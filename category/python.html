@@ -9,63 +9,91 @@
         <title>Nenodias - Python</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-            <link rel="stylesheet" href="/theme/css/normalize.css">
-        <link href='//fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-        <link href='//fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/theme/css/bulma.css">
         <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/theme/css/main.css">
-
-    <link rel="stylesheet" href="/theme/css/blog.css">
-    <link rel="stylesheet" href="/theme/css/github.css">
-        <script src="/theme/js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="/theme/css/pygments.css">
+        <link rel="icon" type="image/png" sizes="16x16" href="/theme/favicon.ico">
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
+        <section class="hero is-default is-small">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Nenodias</h1>
+                    <h2 class="subtitle">
+                      Doing the best code or not so...
+                    </h2>
+              </div>
+            </div>
+          </section>
+          <section class="section blog">
+              <div class="container">
+                  <div class="columns">
+                      <div class="column is-10 is-offset-1">
+                              <h1>
+                                  <span class="title"><span class="is-1">Python<span>
+                                      <i class="fa fa-tags" aria-hidden="true"></i>
+                                  </span>
+                              </h1>
+                          <hr/>
 
-        <div id="wrapper">
-<header id="sidebar" class="side-shadow">
-    <hgroup id="site-header">
-        <a id="site-title" href=""><h1><i class="icon-coffee"></i> Nenodias</h1></a>
-        <p id="site-desc"></p>
-    </hgroup>
-    <nav>
-        <ul id="nav-links">
-        </ul>
-    </nav>
-<footer id="site-info">
-    <p>
-        Proudly powered by <a href="http://getpelican.com/" target="pelican">Pelican</a> and <a href="http://python.org/" target="python">Python</a>. Theme by <a href="https://github.com/hdra/pelican-cait" target="github">hndr</a>.
-    </p>
-    <p>
-        Textures by <a href="http://subtlepatterns.com/" target="subtlepatterns">Subtle Pattern</a>. Font Awesome by <a href="http://fortawesome.github.io/Font-Awesome/" target="github">Dave Grandy</a>.
-    </p>
-</footer></header>
-    <div id="post-container">
-        <ol id="post-list">
-            <li>
-                <article class="post-entry">
-                    <header class="entry-header">
-                        <time class="post-time" datetime="2016-11-11T12:00:00-02:00" pubdate>
-                            Sex 11 novembro 2016
-                        </time>
-                        <a href="/primeiro-artigo.html" rel="bookmark"><h1>O que fazer</h1></a>
-                    </header>
-                    <section class="post-content">
-                        <p>Um resumo sobre o post do Pelican</p>
-                    </section>
-                </article>
-            </li>
-            <hr/>
-        </ol>
-        <div class="paginator">
-            Page 1 / 1
-        </div>
 
+<div class="box content blog-post">
+    <p class="has-text-right has-text-muted">
+        <a href="/primeiro-artigo.html" rel="bookmark"><h1>O que fazer</h1></a>
+        <time class="post-time" datetime="2016-11-11T12:00:00-02:00" pubdate>
+            Sex 11 novembro 2016
+        </time>
+    </p>
+    <section class="post-content">
+        <h1>Testando nosso primeiro post no Pelican</h1>
+<p>Pelican é um gerador de páginas estáticas criado em python para facilitar nossa vida, na 
+criação de blogs, landingpages ou site estáticos.</p>
+    </section>
+</div>
+
+<nav class="pagination">
+    <a class="pagination-previous is-disabled" href="#">
+        <i class="fa fa-arrow-left"></i>
+    </a>
+        <a class="pagination-next is-disabled" href="#">
+            <i class="fa fa-arrow-righ"></i>
+        </a>
+    <ul class="pagination-list">
+        <li>
+            <a class="pagination-link is-current">
+                Página 1 / 1
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+<div class="card is-fullwidth">
+    <div class="card-content">
+                <a class="tag is-info" href="/tag/loucura.html">loucura (1)</a>
+                <a class="tag is-info" href="/tag/markdown.html">markdown (2)</a>
+                <a class="tag is-info" href="/tag/pelican.html">pelican (2)</a>
+                <a class="tag is-info" href="/tag/python.html">python (1)</a>
     </div>
-        </div>
+</div>                      </div>
+                  </div>
+              </div>
+          </div>
 
-        <script src="/theme/js/main.js"></script>
+          <footer class="footer">
+              <div class="container">
+                  <div class="content has-text-centered">
+                      <p>
+                          <a class="icon" href="//github.com/nenodias/nenodias.github.io-src">
+                              <i class="fa fa-github"></i>
+                          </a>
+                      </p>
+                  </div>
+              </div>
+          </footer>
+
     </body>
 </html>
