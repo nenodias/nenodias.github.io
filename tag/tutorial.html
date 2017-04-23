@@ -153,38 +153,26 @@ flask
 
 
 <p>Após isso basta fazer o commit de suas alterações.</p>
-<p><code>bash
+<p><code>shell
  git add .
  git commit -am 'Minhas alterações'</code></p>
 <p>Após isso você verá que sua aplicação não está rodando, pois ainda não alteramos os arquivos "start" e "stop".</p>
 <h3>Configurando o Gunicorn no Start e Stop</h3>
 <p>O projeto diy do openshift nos deixa uma variável de ambiente $OPENSHIFT_DIY_IP com o IP da máquina, dessa forma podemos passar a variável e porta ao gunicorn.</p>
 <p>"start"</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 nohup <span class="nv">$HOME</span>/python/usr/bin/pip3 install -r <span class="nv">$OPENSHIFT_REPO_DIR</span>/requirements.txt
 <span class="nb">cd</span> <span class="nv">$OPENSHIFT_REPO_DIR</span>
 nohup <span class="nv">$HOME</span>/python/usr/bin/gunicorn app:app --bind<span class="o">=</span><span class="nv">$OPENSHIFT_DIY_IP</span>:8080 <span class="p">|&amp;</span> /usr/bin/logshifter -tag diy <span class="p">&amp;</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>A primeira linha é o <a href="https://pt.wikipedia.org/wiki/Shebang">Shebang</a>, o que significa que esse arquivo será executado pelo bash.
 Na segunda linha vemos <a href="https://pt.wikipedia.org/wiki/Nohup">nohup</a>, que executa os comandos em uma sessão separada, vemos logo apóes vemos o uma chamada ao pip para instalar nossas dependências.
 Na terceira linha vemos o nohup, e depois o gunicorn inicializa nossa aplicação flask.</p>
 <p>Isso só funciona pois o cartridge customizado instala o python3.5 dentro da pasta home do servidor do openshift.</p>
 <p>"stop"</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="nb">source</span> <span class="nv">$OPENSHIFT_CARTRIDGE_SDK_BASH</span>
 
 <span class="c1"># The logic to stop your application should be put in this script.</span>
@@ -195,7 +183,7 @@ Na terceira linha vemos o nohup, e depois o gunicorn inicializa nossa aplicaçã
     <span class="nb">kill</span> <span class="sb">`</span>ps -ef <span class="p">|</span> grep gunicorn <span class="p">|</span> grep -v grep <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span><span class="sb">`</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1
 <span class="k">fi</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>Podemos ver que o comando ps procura algum processo do gunicorn, caso ele exista o kill será chamado.</p>
 <p>Após isso, é só fazer o commit das alterações e você verá sua aplicação rodando.</p>
