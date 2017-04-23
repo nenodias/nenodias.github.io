@@ -42,15 +42,164 @@
 
 <div class="box content blog-post">
     <p class="has-text-right has-text-muted">
-        <a href="/primeiro-artigo.html" rel="bookmark"><h1>O que fazer</h1></a>
-        <time class="post-time" datetime="2016-11-11T12:00:00-02:00" pubdate>
-            Sex 11 novembro 2016
+        <a href="/configurando-python-3.5-openshift-flask-gunicorn.html" rel="bookmark"><h1>Configurando OpenShift com Python 3.5 + Flask + Gunicorn</h1></a>
+        <time class="post-time" datetime="2017-04-23T20:37:39-03:00" pubdate>
+            Dom 23 abril 2017
         </time>
     </p>
     <section class="post-content">
-        <h1>Testando nosso primeiro post no Pelican</h1>
-<p>Pelican é um gerador de páginas estáticas criado em python para facilitar nossa vida, na 
-criação de blogs, landingpages ou site estáticos.</p>
+        <p>Configurando OpenShift com Python 3.5</p>
+<h3>Introdução</h3>
+<p>O <a href="https://www.openshift.com/">OpenShift</a> é uma plataforma de PasS que possibilita aos desenvolvedores "subir" aplicações na nuvem de uma maneira simples e rápida. Ele funciona a partir de gears(engrenagens) que representam máquinas que irão rodar as aplicações. Dentro de cada gear é possível instalar serviços, os são chamados de "cartridges".</p>
+<p>Existem 3 planos:</p>
+<ul>
+<li>Online (gratuito, com três gears)</li>
+<li>Enterprise (pago com suporte)</li>
+<li>Origin (versão da comunidade e pode ser utilizado livremente)</li>
+</ul>
+<p>Um problema que me deparei ao utilizar o Openshift é que ele não possui um cartridge com Python3.5. Porém existe uma forma um pouco mais complicada de resolver esse problema.</p>
+<p>Após fazer seu cadastro no OpenShift e instalar o <a href="https://developers.openshift.com/managing-your-applications/client-tools.html">client tools</a> que contém as ferramentas necessárias para configurar nossa aplicação.</p>
+<p>Após tudo isso vamos colocar a mão na massa, abra seu terminal e vamos lá.</p>
+<h3>Criando a aplicação</h3>
+<div class="highlight"><pre><span></span>rhc app create &lt;app-name&gt; https://raw.githubusercontent.com/Grief/openshift-cartridge-python-3.5/master/metadata/manifest.yml diy-0.1
+</pre></div>
+
+
+<p>Substituindo "<app-name>" pelo nome de sua aplicação.
+O arquivo manifest.yml criado por Changaco(github) e "forkeado" por Grief(github) contém as configurações de um cartridge customizado que contém o python 3.5.</p>
+<p>Para os curiosos o conteúdo do arquivo</p>
+<div class="highlight"><pre><span></span>---
+Name: python
+Cartridge-Short-Name: PYTHON
+Display-Name: Only Python
+Description: &#39;An embedded cartridge that provides only python, nothing else.&#39;
+Version: &#39;3.5.0&#39;
+Versions: [&#39;3.5.0&#39;, &#39;2.7.11&#39;]
+License: The Python License
+License-Url: http://docs.python.org/3/license.html
+Vendor: python.org
+Cartridge-Version: 0.0.2
+Cartridge-Vendor: praisebetoscience
+Categories:
+- service
+- python
+- embedded
+Website: https://github.com/praisebetoscience/openshift-cartridge-python-3.5
+Help-Topics:
+  Developer Center: https://www.openshift.com/developers
+Provides:
+- python
+Publishes:
+Subscribes:
+  set-env:
+    Type: ENV:*
+    Required: false
+  set-doc-url:
+    Type: STRING:urlpath
+    Required: false
+Scaling:
+  Min: 1
+  Max: -1
+Version-Overrides:
+  &#39;2.7.11&#39;:
+    Display-Name: Python 2.7
+    License: The Python License, version 2.7
+    Provides:
+    - python-2.7
+    - python
+    - python(version) = 2.7
+  &#39;3.5.0&#39;:
+    Display-Name: Python 3.5
+    License: The Python License, version 3.5
+    Provides:
+    - python-3.5
+    - python
+    - python(version) = 3.5
+</pre></div>
+
+
+<p>Após isso sua aplicação já estárá executando, caso deseje acessar o endereço da mesma deverá ser http://<app-name>-<username>.rhcloud.com.
+Você verá que a página do seu projeto não é nada mais do que o diy (Dot It Yourself), que é uma aplicação Ruby de exemplo que você pode alterar, e é o que vamos fazer.</p>
+<p>Se você acessar o diretório do seu projeto verá que existe um diretório ".openshift", dentro desse diretório existe um outro diretório chamado "action_hooks", e dentro desse diretório existem dois arquivos "start" e "stop".</p>
+<ul>
+<li>"<app-name>/.openshift/action_hooks/start"</li>
+<li>"<app-name>/.openshift/action_hooks/stop"</li>
+</ul>
+<p>Os dois arquivos são respectivamente os comandos para "subir" e "pausar" sua aplicação.</p>
+<h3>Flask</h3>
+<p>Vamos criar um projeto de exemplo, bem simples, que apenas nos retorne a versão do python utilizada.
+Primeiramente vamos criar nosso requirements.txt, com gunicorn e o flask.</p>
+<p>"requirements.txt"</p>
+<div class="highlight"><pre><span></span>gunicorn
+flask
+</pre></div>
+
+
+<p>Depois disso vamos criar o arquivo app.py que conterá nossa aplicação.</p>
+<p>"app.py"</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span>
+</pre></div>
+
+
+<p>Após isso basta fazer o commit de suas alterações.</p>
+<p><code>bash
+ git add .
+ git commit -am 'Minhas alterações'</code></p>
+<p>Após isso você verá que sua aplicação não está rodando, pois ainda não alteramos os arquivos "start" e "stop".</p>
+<h3>Configurando o Gunicorn no Start e Stop</h3>
+<p>O projeto diy do openshift nos deixa uma variável de ambiente $OPENSHIFT_DIY_IP com o IP da máquina, dessa forma podemos passar a variável e porta ao gunicorn.</p>
+<p>"start"</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+nohup <span class="nv">$HOME</span>/python/usr/bin/pip3 install -r <span class="nv">$OPENSHIFT_REPO_DIR</span>/requirements.txt
+<span class="nb">cd</span> <span class="nv">$OPENSHIFT_REPO_DIR</span>
+nohup <span class="nv">$HOME</span>/python/usr/bin/gunicorn app:app --bind<span class="o">=</span><span class="nv">$OPENSHIFT_DIY_IP</span>:8080 <span class="p">|&amp;</span> /usr/bin/logshifter -tag diy <span class="p">&amp;</span>
+</pre></div>
+</td></tr></table>
+
+<p>A primeira linha é o <a href="https://pt.wikipedia.org/wiki/Shebang">Shebang</a>, o que significa que esse arquivo será executado pelo bash.
+Na segunda linha vemos <a href="https://pt.wikipedia.org/wiki/Nohup">nohup</a>, que executa os comandos em uma sessão separada, vemos logo apóes vemos o uma chamada ao pip para instalar nossas dependências.
+Na terceira linha vemos o nohup, e depois o gunicorn inicializa nossa aplicação flask.</p>
+<p>Isso só funciona pois o cartridge customizado instala o python3.5 dentro da pasta home do servidor do openshift.</p>
+<p>"stop"</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">source</span> <span class="nv">$OPENSHIFT_CARTRIDGE_SDK_BASH</span>
+
+<span class="c1"># The logic to stop your application should be put in this script.</span>
+<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="k">$(</span>ps -ef <span class="p">|</span> grep gunicorn <span class="p">|</span> grep -v grep<span class="k">)</span><span class="s2">&quot;</span> <span class="o">]</span>
+<span class="k">then</span>
+    client_result <span class="s2">&quot;Application is already stopped&quot;</span>
+<span class="k">else</span>
+    <span class="nb">kill</span> <span class="sb">`</span>ps -ef <span class="p">|</span> grep gunicorn <span class="p">|</span> grep -v grep <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span><span class="sb">`</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1
+<span class="k">fi</span>
+</pre></div>
+</td></tr></table>
+
+<p>Podemos ver que o comando ps procura algum processo do gunicorn, caso ele exista o kill será chamado.</p>
+<p>Após isso, é só fazer o commit das alterações e você verá sua aplicação rodando.</p>
+<p>Espero que o post ajude a quem quer subir alguma aplicação com python3.5 e só tem o heroku como opção.</p>
+<h3>Referências</h3>
+<ul>
+<li><a href="https://www.profissionaisti.com.br/2015/04/openshift-paas-de-verdade/">Imaster</a></li>
+</ul>
     </section>
 </div>
 
@@ -73,10 +222,10 @@ criação de blogs, landingpages ou site estáticos.</p>
 
 <div class="card is-fullwidth">
     <div class="card-content">
-                <a class="tag is-info" href="/tag/loucura.html">loucura (1)</a>
-                <a class="tag is-info" href="/tag/markdown.html">markdown (2)</a>
-                <a class="tag is-info" href="/tag/pelican.html">pelican (2)</a>
+                <a class="tag is-info" href="/tag/cloud.html">cloud (1)</a>
+                <a class="tag is-info" href="/tag/install.html">install (1)</a>
                 <a class="tag is-info" href="/tag/python.html">python (1)</a>
+                <a class="tag is-info" href="/tag/tutorial.html">tutorial (1)</a>
     </div>
 </div>                      </div>
                   </div>
