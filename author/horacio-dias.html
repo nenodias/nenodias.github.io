@@ -47,7 +47,7 @@
         </time>
     </p>
     <section class="post-content">
-        <p>Configurando OpenShift com Python 3.5</p>
+        <p>Configurando OpenShift com Python 3.5 + Flask + Gunicorn</p>
 <h3>Introdução</h3>
 <p>O <a href="https://www.openshift.com/">OpenShift</a> é uma plataforma de PasS que possibilita aos desenvolvedores "subir" aplicações na nuvem de uma maneira simples e rápida. Ele funciona a partir de gears(engrenagens) que representam máquinas que irão rodar as aplicações. Dentro de cada gear é possível instalar serviços, os são chamados de "cartridges".</p>
 <p>Existem 3 planos:</p>
@@ -60,14 +60,60 @@
 <p>Após fazer seu cadastro no OpenShift e instalar o <a href="https://developers.openshift.com/managing-your-applications/client-tools.html">client tools</a> que contém as ferramentas necessárias para configurar nossa aplicação.</p>
 <p>Após tudo isso vamos colocar a mão na massa, abra seu terminal e vamos lá.</p>
 <h3>Criando a aplicação</h3>
-<div class="highlight"><pre><span></span>rhc app create &lt;app-name&gt; https://raw.githubusercontent.com/Grief/openshift-cartridge-python-3.5/master/metadata/manifest.yml diy-0.1
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>rhc app create <span class="sb">`</span>&lt;app-name&gt;<span class="sb">`</span> https://raw.githubusercontent.com/Grief/openshift-cartridge-python-3.5/master/metadata/manifest.yml diy-0.1
 </pre></div>
+</td></tr></table>
 
-
-<p>Substituindo "<app-name>" pelo nome de sua aplicação.
+<p>Substituindo "<code>&lt;app-name&gt;</code>" pelo nome de sua aplicação.
 O arquivo manifest.yml criado por Changaco(github) e "forkeado" por Grief(github) contém as configurações de um cartridge customizado que contém o python 3.5.</p>
 <p>Para os curiosos o conteúdo do arquivo</p>
-<div class="highlight"><pre><span></span>---
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre></div></td><td class="code"><div class="highlight"><pre><span></span>---
 Name: python
 Cartridge-Short-Name: PYTHON
 Display-Name: Only Python
@@ -115,28 +161,36 @@ Version-Overrides:
     - python
     - python(version) = 3.5
 </pre></div>
+</td></tr></table>
 
-
-<p>Após isso sua aplicação já estárá executando, caso deseje acessar o endereço da mesma deverá ser http://<app-name>-<username>.rhcloud.com.
+<p>Após isso sua aplicação já estárá executando, caso deseje acessar o endereço da mesma deverá ser http://<code>&lt;app-name&gt;</code>-<username>.rhcloud.com.
 Você verá que a página do seu projeto não é nada mais do que o diy (Dot It Yourself), que é uma aplicação Ruby de exemplo que você pode alterar, e é o que vamos fazer.</p>
 <p>Se você acessar o diretório do seu projeto verá que existe um diretório ".openshift", dentro desse diretório existe um outro diretório chamado "action_hooks", e dentro desse diretório existem dois arquivos "start" e "stop".</p>
 <ul>
-<li>"<app-name>/.openshift/action_hooks/start"</li>
-<li>"<app-name>/.openshift/action_hooks/stop"</li>
+<li>"<code>&lt;app-name&gt;</code>/.openshift/action_hooks/start"</li>
+<li>"<code>&lt;app-name&gt;</code>/.openshift/action_hooks/stop"</li>
 </ul>
 <p>Os dois arquivos são respectivamente os comandos para "subir" e "pausar" sua aplicação.</p>
 <h3>Flask</h3>
 <p>Vamos criar um projeto de exemplo, bem simples, que apenas nos retorne a versão do python utilizada.
 Primeiramente vamos criar nosso requirements.txt, com gunicorn e o flask.</p>
 <p>"requirements.txt"</p>
-<div class="highlight"><pre><span></span>gunicorn
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>gunicorn
 flask
 </pre></div>
-
+</td></tr></table>
 
 <p>Depois disso vamos criar o arquivo app.py que conterá nossa aplicação.</p>
 <p>"app.py"</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -145,7 +199,7 @@ flask
 <span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>Após isso basta fazer o commit de suas alterações.</p>
 <p><code>shell
@@ -155,19 +209,31 @@ flask
 <h3>Configurando o Gunicorn no Start e Stop</h3>
 <p>O projeto diy do openshift nos deixa uma variável de ambiente $OPENSHIFT_DIY_IP com o IP da máquina, dessa forma podemos passar a variável e porta ao gunicorn.</p>
 <p>"start"</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 nohup <span class="nv">$HOME</span>/python/usr/bin/pip3 install -r <span class="nv">$OPENSHIFT_REPO_DIR</span>/requirements.txt
 <span class="nb">cd</span> <span class="nv">$OPENSHIFT_REPO_DIR</span>
 nohup <span class="nv">$HOME</span>/python/usr/bin/gunicorn app:app --bind<span class="o">=</span><span class="nv">$OPENSHIFT_DIY_IP</span>:8080 <span class="p">|&amp;</span> /usr/bin/logshifter -tag diy <span class="p">&amp;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>A primeira linha é o <a href="https://pt.wikipedia.org/wiki/Shebang">Shebang</a>, o que significa que esse arquivo será executado pelo bash.
 Na segunda linha vemos <a href="https://pt.wikipedia.org/wiki/Nohup">nohup</a>, que executa os comandos em uma sessão separada, vemos logo apóes vemos o uma chamada ao pip para instalar nossas dependências.
 Na terceira linha vemos o nohup, e depois o gunicorn inicializa nossa aplicação flask.</p>
 <p>Isso só funciona pois o cartridge customizado instala o python3.5 dentro da pasta home do servidor do openshift.</p>
 <p>"stop"</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="nb">source</span> <span class="nv">$OPENSHIFT_CARTRIDGE_SDK_BASH</span>
 
 <span class="c1"># The logic to stop your application should be put in this script.</span>
@@ -178,7 +244,7 @@ Na terceira linha vemos o nohup, e depois o gunicorn inicializa nossa aplicaçã
     <span class="nb">kill</span> <span class="sb">`</span>ps -ef <span class="p">|</span> grep gunicorn <span class="p">|</span> grep -v grep <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span><span class="sb">`</span> &gt; /dev/null 2&gt;<span class="p">&amp;</span>1
 <span class="k">fi</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>Podemos ver que o comando ps procura algum processo do gunicorn, caso ele exista o kill será chamado.</p>
 <p>Após isso, é só fazer o commit das alterações e você verá sua aplicação rodando.</p>
